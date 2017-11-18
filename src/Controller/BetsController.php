@@ -54,8 +54,7 @@ class BetsController extends AppController
             $bet = $this->Bets->patchEntity($bet, $this->request->getData());
             if ($this->Bets->save($bet)) {
                 $this->Flash->success(__('The bet has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', 'controller'=>'Lots',$bet->lot_id]);
             }
             $this->Flash->error(__('The bet could not be saved. Please, try again.'));
         }

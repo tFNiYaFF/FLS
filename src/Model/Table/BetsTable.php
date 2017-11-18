@@ -32,7 +32,13 @@ class BetsTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+        $this->addBehavior('Timestamp',[
+            'events'=>[
+                'Model.beforeSave'=>[
+                    'betdate'=>'new'
+                ]
+            ]
+        ]);
         $this->setTable('bets');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');

@@ -33,7 +33,6 @@ class LotsTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
         $this->setTable('lots');
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
