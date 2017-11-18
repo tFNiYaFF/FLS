@@ -39,7 +39,9 @@
                     <th scope="col"><?= __('Description') ?></th>
                     <th scope="col"><?= __('Коэффициент') ?></th>
                 </tr>
-                <?php foreach ($lot->choises as $choises): ?>
+                <?php
+                    $koeff = array();
+                    foreach ($lot->choises as $choises): ?>
                     <tr>
                         <td><?= h($choises->id) ?></td>
                         <td><?= h($choises->lot_id) ?></td>
@@ -59,6 +61,7 @@
                             }
                             if($sum != 0){
                                 $currentK = $sum/$currentSum;
+                                $koeff[$choises->id] = $currentK;
                             }
                         ?>
                         <td><?= h(round($currentK,3)) ?></td>
@@ -76,6 +79,7 @@
                 <th scope="col"><?= __('Сумма') ?></th>
                 <th scope="col"><?= __('Выбор') ?></th>
                 <th scope="col"><?= __('Дата ставки') ?></th>
+                <?php if($lot->active==0):?><th scope="col"><?= __('Выигрыш') ?></th><?php endif;?>
             </tr>
             <?php foreach ($lot->bets as $bets): ?>
             <tr>
@@ -83,6 +87,11 @@
                 <td><?= h($bets->sum) ?></td>
                 <td><?= h($bets->choise) ?></td>
                 <td><?= h($bets->betdate) ?></td>
+                <?php if($lot->active==0 && $lot->winner==$bets->choise):?>
+                    <td style="color:green;"><b><?= h(round(($bets->sum)*$koeff[$bets->choise],3)) ?></b></td>
+                    <?php else:?>
+                    <td style="color:red;"><b><?= h(0) ?></b></td>
+                <?php endif;?>
             </tr>
             <?php endforeach; ?>
         </table>
