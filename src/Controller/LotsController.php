@@ -52,7 +52,7 @@ class LotsController extends AppController
         $lot = $this->Lots->newEntity();
         if ($this->request->is('post')) {
             $lot = $this->Lots->patchEntity($lot, $this->request->getData());
-            if ($this->Lots->save($lot)) {
+            if ($this->Lots->save($lot,['associated' => ['Choises']])) {
                 $this->Flash->success(__('The lot has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }

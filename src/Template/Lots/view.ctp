@@ -37,12 +37,31 @@
                     <th scope="col"><?= __('Id') ?></th>
                     <th scope="col"><?= __('Lot Id') ?></th>
                     <th scope="col"><?= __('Description') ?></th>
+                    <th scope="col"><?= __('Коэффициент') ?></th>
                 </tr>
                 <?php foreach ($lot->choises as $choises): ?>
                     <tr>
                         <td><?= h($choises->id) ?></td>
                         <td><?= h($choises->lot_id) ?></td>
                         <td><?= h($choises->description) ?></td>
+                        <?php
+                            $sum = 0;
+                            $currentSum = 0;
+                            $currentK = 0;
+                            foreach ($lot->bets as $bets){
+                                $sum+=$bets->sum;
+                                if($choises->id == $bets->choise){
+                                    $currentSum+=$bets->sum;
+                                }
+                            }
+                            if($currentSum==0){
+                                $currentSum = $sum;
+                            }
+                            if($sum != 0){
+                                $currentK = $sum/$currentSum;
+                            }
+                        ?>
+                        <td><?= h(round($currentK,3)) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -69,6 +88,7 @@
         </table>
         <?php endif; ?>
     </div>
+    <?php if($lot->active == 1):?>
     <div class="bets form large-9 medium-8 columns content">
         <?= $this->Form->create(null,['method'=>'POST','url'=>'/bets.html']) ?>
         <fieldset>
@@ -87,5 +107,5 @@
         <?= $this->Form->button(__('Submit')) ?>
         <?= $this->Form->end() ?>
     </div>
-
+    <?php endif;?>
 </div>
