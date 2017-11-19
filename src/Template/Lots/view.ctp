@@ -80,8 +80,8 @@
     <br>
     <br>
     <div class="related">
-        <h4><?= __('Текущие ставки') ?></h4>
         <?php if (!empty($lot->bets)): ?>
+        <h4><?= __('Текущие ставки') ?></h4>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Поставил') ?></th>
