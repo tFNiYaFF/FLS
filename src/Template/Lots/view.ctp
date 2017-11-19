@@ -30,7 +30,6 @@
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th scope="col"><?= __('Id') ?></th>
-                    <th scope="col"><?= __('Lot Id') ?></th>
                     <th scope="col"><?= __('Description') ?></th>
                     <th scope="col"><?= __('Коэффициент') ?></th>
                 </tr>
@@ -39,7 +38,6 @@
                     foreach ($lot->choises as $choises): ?>
                     <tr>
                         <td><?= h($choises->id) ?></td>
-                        <td><?= h($choises->lot_id) ?></td>
                         <td><?= h($choises->description) ?></td>
                         <?php
                             $sum = 0;
