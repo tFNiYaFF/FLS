@@ -49,7 +49,7 @@
                     $dbKeysToListKeys = array();
                     $counter = 1;
                     foreach ($lot->choises as $choises): ?>
-                    <tr>
+                    <tr <?php if($lot->winner==$choises->id):?>style='border:2px solid green;'<?php endif;?>>
                         <td><?= h($counter) ?></td>
                         <td><?= h($choises->description) ?></td>
                         <?php
