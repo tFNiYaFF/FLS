@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\I18n\Time;
+use DateTime;
 
 /**
  * Lot Controller
@@ -21,7 +22,15 @@ class LotsController extends AppController
     public function index()
     {
         $lots = $this->paginate($this->Lots);
-
+        foreach ($lots as $lot) {
+            $date = $lot->deadline;
+            $date= DateTime::createFromFormat("d.m.y, G:i", $date);
+            $date = $date->getTimestamp();
+            if($date<time()){
+                $lot->active = 0;
+                $this->Lots->save($lot,['associated' => ['Choises']]);
+            }
+        }
         $this->set(compact('lots'));
         $this->set('_serialize', ['lots']);
     }
