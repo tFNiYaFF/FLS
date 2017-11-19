@@ -25,9 +25,7 @@ class LotsController extends AppController
 
         foreach ($lots as $lot) {
             $date = $lot->deadline;
-            $date = DateTime::createFromFormat("d.m.y, G:i", $date);
-            $date = $date->getTimestamp();
-            if ($date < time()) {
+            if ($date->isPast()) {
                 $lot->active = 0;
                 $this->Lots->save($lot, ['associated' => ['Choises']]);
             }
@@ -86,6 +84,7 @@ class LotsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $lot = $this->Lots->patchEntity($lot, $this->request->getData());
+            $lot->winner = $this->request->getData()['winner'];
             if ($this->Lots->save($lot)) {
                 $this->Flash->success(__('The lot has been saved.'));
 

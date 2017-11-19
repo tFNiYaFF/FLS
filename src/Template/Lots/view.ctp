@@ -9,40 +9,40 @@
     <h3><?= h($lot->title) ?></h3>
     <table class="vertical-table" >
         <tr>
-            <th scope="row"><?= __('Название') ?></th>
+            <th scope="row"><?= __('Title') ?></th>
             <td><?= h($lot->title) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Описание') ?></th>
+            <th scope="row"><?= __('Description') ?></th>
             <td><?= h($lot->description) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Создатель') ?></th>
+            <th scope="row"><?= __('Author') ?></th>
             <td><?= h($lot->user) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Окончание') ?></th>
+            <th scope="row"><?= __('Deadline') ?></th>
             <td><?= h($lot->deadline) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Статус') ?></th>
+            <th scope="row"><?= __('Status') ?></th>
             <?php if($lot->active==1):?>
-                <td style="color:green"><?= h("Активно") ?></td>
+                <td style="color:green"><?= h("Active") ?></td>
             <?php else:?>
-                <td style="color:red"><?= h("Окончено") ?></td>
+                <td style="color:red"><?= h("Closed") ?></td>
             <?php endif;?>
         </tr>
     </table>
     <br>
     <br>
     <div class="related">
-        <h4><?= __('Варианты') ?></h4>
+        <h4><?= __('Choices') ?></h4>
         <?php if (!empty($lot->choises)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th scope="col"><?= __('Id') ?></th>
                     <th scope="col"><?= __('Description') ?></th>
-                    <th scope="col"><?= __('Коэффициент') ?></th>
+                    <th scope="col"><?= __('Ratio') ?></th>
                 </tr>
                 <?php
                     $koeff = array();
@@ -81,26 +81,26 @@
     <br>
     <div class="related">
         <?php if (!empty($lot->bets)): ?>
-        <h4><?= __('Текущие ставки') ?></h4>
+        <h4><?= __('Current participants') ?></h4>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Поставил') ?></th>
-                <th scope="col"><?= __('Сумма') ?></th>
-                <th scope="col"><?= __('Выбор') ?></th>
-                <th scope="col"><?= __('Дата ставки') ?></th>
-                <?php if($lot->active==0):?><th scope="col"><?= __('Выплата') ?></th><?php endif;?>
+                <th scope="col"><?= __('Author') ?></th>
+                <th scope="col"><?= __('Sum') ?></th>
+                <th scope="col"><?= __('Choice') ?></th>
+                <th scope="col"><?= __('Date') ?></th>
+                <?php if($lot->active==0):?><th scope="col"><?= __('Prize') ?></th><?php endif;?>
             </tr>
             <?php foreach ($lot->bets as $bets): ?>
             <tr>
                 <td><?= h($bets->fio) ?></td>
-                <td><?= h($bets->sum) ?></td>
+                <td><?= $this->Number->currency($bets->sum,"USD") ?></td>
                 <td><?= h($dbKeysToListKeys[$bets->choise]) ?></td>
                 <td><?= h($bets->betdate) ?></td>
                 <?php if($lot->active==0)
                     if($lot->winner==$bets->choise):?>
-                        <td style="color:green;"><b><?= h(round(($bets->sum)*$koeff[$bets->choise],3)) ?></b></td>
+                        <td style="color:green;"><b><?= $this->Number->currency( round(($bets->sum)*$koeff[$bets->choise],3), "RUB") ?></b></td>
                     <?php else:?>
-                        <td style="color:red;"><b><?= h(0) ?></b></td>
+                        <td style="color:red;"><b><?= $this->Number->currency(0,"USD")  ?></b></td>
                 <?php endif;?>
             </tr>
             <?php endforeach; ?>

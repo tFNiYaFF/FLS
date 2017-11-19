@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'Ставки';
+$cakeDescription = 'Lots';
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +36,7 @@ $cakeDescription = 'Ставки';
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
-                <h1><a href="/lots">Главная</a></h1>
+                <h1><a href="/lots">Main page</a></h1>
             </li>
         </ul>
     </nav>
