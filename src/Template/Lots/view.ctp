@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Lot $lot
  */
 ?>
+<div style="width: 100%; display: flex; justify-content: center;">
 <div class="lots view large-9 medium-8 columns content" style="text-align: center;">
     <h3><?= h($lot->title) ?></h3>
     <table class="vertical-table">
@@ -92,7 +93,6 @@
         <?php endif; ?>
     </div>
     <?php if($lot->active == 1):?>
-    <div class="bets form large-9 medium-8 columns content">
         <?= $this->Form->create(null,['method'=>'POST','url'=>'/bets.html']) ?>
         <fieldset>
             <legend><?= __('Add Bet') ?></legend>
@@ -109,6 +109,5 @@
         </fieldset>
         <?= $this->Form->button(__('Submit')) ?>
         <?= $this->Form->end() ?>
-    </div>
     <?php endif;?>
 </div>
