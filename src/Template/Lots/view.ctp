@@ -7,7 +7,7 @@
 <div style="width: 100%; display: flex; justify-content: center;">
 <div class="lots view large-9 medium-8 columns content" style="text-align: center;">
     <h3><?= h($lot->title) ?></h3>
-    <table class="vertical-table">
+    <table class="vertical-table" >
         <tr>
             <th scope="row"><?= __('Название') ?></th>
             <td><?= h($lot->title) ?></td>
@@ -24,7 +24,17 @@
             <th scope="row"><?= __('Окончание') ?></th>
             <td><?= h($lot->deadline) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('Статус') ?></th>
+            <?php if($lot->active==1):?>
+                <td style="color:green"><?= h("Активно") ?></td>
+            <?php else:?>
+                <td style="color:red"><?= h("Окончено") ?></td>
+            <?php endif;?>
+        </tr>
     </table>
+    <br>
+    <br>
     <div class="related">
         <h4><?= __('Варианты') ?></h4>
         <?php if (!empty($lot->choises)): ?>
@@ -36,9 +46,11 @@
                 </tr>
                 <?php
                     $koeff = array();
+                    $dbKeysToListKeys = array();
+                    $counter = 1;
                     foreach ($lot->choises as $choises): ?>
                     <tr>
-                        <td><?= h($choises->id) ?></td>
+                        <td><?= h($counter) ?></td>
                         <td><?= h($choises->description) ?></td>
                         <?php
                             $sum = 0;
@@ -57,6 +69,7 @@
                                 $currentK = $sum/$currentSum;
                                 $koeff[$choises->id] = $currentK;
                             }
+                            $dbKeysToListKeys[$choises->id] = $counter++;
                         ?>
                         <td><?= h(round($currentK,3)) ?></td>
                     </tr>
@@ -64,6 +77,8 @@
             </table>
         <?php endif; ?>
     </div>
+    <br>
+    <br>
     <div class="related">
         <h4><?= __('Текущие ставки') ?></h4>
         <?php if (!empty($lot->bets)): ?>
@@ -79,7 +94,7 @@
             <tr>
                 <td><?= h($bets->fio) ?></td>
                 <td><?= h($bets->sum) ?></td>
-                <td><?= h($bets->choise) ?></td>
+                <td><?= h($dbKeysToListKeys[$bets->choise]) ?></td>
                 <td><?= h($bets->betdate) ?></td>
                 <?php if($lot->active==0)
                     if($lot->winner==$bets->choise):?>
@@ -93,6 +108,8 @@
         <?php endif; ?>
     </div>
     <?php if($lot->active == 1):?>
+        <br>
+        <br>
         <?= $this->Form->create(null,['method'=>'POST','url'=>'/bets.html']) ?>
         <fieldset>
             <legend><?= __('Add Bet') ?></legend>
