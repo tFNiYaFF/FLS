@@ -6,15 +6,16 @@
 ?>
 
 <div class="lots index large-9 medium-8 columns content">
-    <h3><?= __('Лоты') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <h3><?= __('Ставки') ?></h3>
+    <table cellpadding="0" cellspacing="0" >
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('Название') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Описание') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Окончание') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Создатель') ?></th>
-                <th scope="col" class="actions"><?= __('') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Статус') ?></th>
+                <th scope="col" class="actions"><?= __('Действие') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,11 @@
                 <td><?= h($lot->description) ?></td>
                 <td><?= h($lot->deadline) ?></td>
                 <td><?= h($lot->user) ?></td>
+                <?php if($lot->active==1):?>
+                    <td style="color:green"><?= h("Активно") ?></td>
+                    <?php else:?>
+                    <td style="color:red"><?= h("Окончено") ?></td>
+                <?php endif;?>
                 <td class="actions">
                     <?= $this->Html->link(__('Просмотреть'), ['action' => 'view', $lot->id]) ?>
                 </td>

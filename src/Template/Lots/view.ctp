@@ -4,9 +4,9 @@
  * @var \App\Model\Entity\Lot $lot
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
+<nav class="large-3 medium-4 columns" id="actions-sidebar" >
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('List Lots'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Список ставок'), ['action' => 'index']) ?> </li>
     </ul>
 </nav>
 <div class="lots view large-9 medium-8 columns content">
@@ -57,7 +57,7 @@
                                 }
                             }
                             if($currentSum==0){
-                                $currentSum = $sum;
+                                $currentSum = 1;
                             }
                             if($sum != 0){
                                 $currentK = $sum/$currentSum;
@@ -79,7 +79,7 @@
                 <th scope="col"><?= __('Сумма') ?></th>
                 <th scope="col"><?= __('Выбор') ?></th>
                 <th scope="col"><?= __('Дата ставки') ?></th>
-                <?php if($lot->active==0):?><th scope="col"><?= __('Выигрыш') ?></th><?php endif;?>
+                <?php if($lot->active==0):?><th scope="col"><?= __('Выплата') ?></th><?php endif;?>
             </tr>
             <?php foreach ($lot->bets as $bets): ?>
             <tr>
@@ -87,10 +87,11 @@
                 <td><?= h($bets->sum) ?></td>
                 <td><?= h($bets->choise) ?></td>
                 <td><?= h($bets->betdate) ?></td>
-                <?php if($lot->active==0 && $lot->winner==$bets->choise):?>
-                    <td style="color:green;"><b><?= h(round(($bets->sum)*$koeff[$bets->choise],3)) ?></b></td>
+                <?php if($lot->active==0)
+                    if($lot->winner==$bets->choise):?>
+                        <td style="color:green;"><b><?= h(round(($bets->sum)*$koeff[$bets->choise],3)) ?></b></td>
                     <?php else:?>
-                    <td style="color:red;"><b><?= h(0) ?></b></td>
+                        <td style="color:red;"><b><?= h(0) ?></b></td>
                 <?php endif;?>
             </tr>
             <?php endforeach; ?>
