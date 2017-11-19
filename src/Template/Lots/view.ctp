@@ -4,12 +4,7 @@
  * @var \App\Model\Entity\Lot $lot
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar" >
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Список ставок'), ['action' => 'index']) ?> </li>
-    </ul>
-</nav>
-<div class="lots view large-9 medium-8 columns content">
+<div class="lots view large-9 medium-8 columns content" style="text-align: center;">
     <h3><?= h($lot->title) ?></h3>
     <table class="vertical-table">
         <tr>
